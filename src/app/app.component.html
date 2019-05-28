@@ -6,26 +6,66 @@
 
     <ul>
       <li *ngFor="let item of items">
+        <p>{{ item | json }}</p>
         <h1>
-          {{ item }}
+          {{ item.name }}
         </h1>
+        <p>
+          {{ item.type }}
+        </p>
+        <button (click)="delete(item._id)">DEL</button>
+        <button (click)="edit(item)">EDIT</button>
       </li>
     </ul>
   </div>
   <div>
-    <table>
+    <h3>Create new Item..</h3>
+    <table [formGroup]="itemForm">
       <tbody>
         <tr>
           <td>ItemName</td>
           <td>
-            <input type="text" #item />
+            <input formControlName="name" type="text" />
           </td>
+        </tr>
+        <tr>
+          <td>Item Type</td>
+          <td>
+            <input formControlName="type" type="text" />
+          </td>
+        </tr>
+        <tr>
           <td></td>
           <td>
-            <button (click)="create(item.value)">Create</button>
+            <button (click)="create()">POST</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <ng-container *ngIf="currentItemId">
+      <h3>Edit Item {{ currentItemId }}..</h3>
+      <table [formGroup]="itemUpdateForm">
+        <tbody>
+          <tr>
+            <td>ItemName</td>
+            <td>
+              <input formControlName="name" type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td>Item Type</td>
+            <td>
+              <input formControlName="type" type="text" />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <button (click)="update()">UPDATE</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
   </div>
 </div>
